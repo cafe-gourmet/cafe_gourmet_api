@@ -1,0 +1,12 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - .:/usr/data/db
+    environment:
+      - POSTGRES_PASSWORD=ADMIN
+      - POSTGRES_USER=ADMIN
+      - POSTGRES_DB=cafe_gourmet_db

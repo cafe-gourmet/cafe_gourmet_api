@@ -17,3 +17,121 @@ model SobreNos {
   id    Int     @default(autoincrement()) @id
   descricao String  
 }
+model Contato {
+  id    Int     @default(autoincrement()) @id
+  nome String 
+  endereco String
+  telefone String
+  email String
+  descricao String
+  linkGoogleMaps String 
+}
+model Carrinho {
+  id    Int     @default(autoincrement()) @id
+  idProduto Int 
+  idCliente Int
+  qntProduto Int
+  idPlano Int
+}
+model Situacao{
+  id Int @default(autoincrement()) @id
+  descricao String
+  cargos Cargo[]
+  usuarios Usuario[]
+  planos Plano[]
+}
+model Permissao {
+  id Int @default(autoincrement()) @id
+  descricao String
+  cargos CargoPermissoes[]
+}
+model Cargo {
+  id Int @default(autoincrement()) @id
+  nome String
+  situacao Situacao @relation(fields: [idSituacao], references: [id])
+  idSituacao Int
+  permissoes CargoPermissoes[]
+  usuarios Usuario[]
+}
+model CargoPermissoes {
+  cargo Cargo @relation(fields: [idCargo], references: [id])
+  idCargo Int
+  permissao Permissao @relation(fields: [idPermissao], references: [id])
+  idPermissao Int
+  @@id([idCargo, idPermissao])
+}
+model Usuario{
+  id Int @default(autoincrement()) @id
+  nomeCompleto String
+  email String
+  senha String
+  fotoPerfil Bytes
+  cargo Cargo @relation(fields: [idCargo], references: [id])
+  idCargo Int
+  situacao Situacao @relation(fields: [idSituacao], references: [id])
+  idSituacao Int
+  cliente Cliente?
+}
+model Cliente{
+  id Int @default(autoincrement()) @id
+  cpf String
+  telefone String
+  endereco String
+  plano Plano @relation(fields: [planoId], references: [id])
+  planoId Int
+  usuario Usuario @relation(fields: [idUsuario], references: [id])
+  idUsuario Int @unique
+}
+model Plano{
+  id Int @default(autoincrement()) @id
+  nome String
+  preco Float
+  descricao String
+  situacao Situacao @relation(fields: [idSituacao], references: [id])
+  idSituacao Int
+  periodo PlanoPeriodo @relation(fields: [idPeriodo], references: [id])
+  idPeriodo Int
+  clientes Cliente[]
+  produtos PlanoProdutos[]
+  anexos Anexo[]
+}
+model PlanoPeriodo{
+  id Int @default(autoincrement()) @id
+  descricao String
+  planos Plano[]
+}
+model Produto{
+  id Int @default(autoincrement()) @id
+  nome String
+  marca String
+  preco Float
+  codigoBarras BigInt
+  categoria Categoria @relation(fields: [idCategoria], references: [id])
+  idCategoria Int
+  quantidade Int
+  percentualDescontoMensal Int
+  percentualDescontoAnual Int
+  planos PlanoProdutos[]
+  anexos Anexo[]
+}
+model PlanoProdutos {
+  plano Plano @relation(fields: [idPlano], references: [id])
+  idPlano Int
+  produto Produto @relation(fields: [idProduto], references: [id])
+  idProduto Int
+  @@id([idPlano, idProduto])
+}
+model Categoria{
+  id Int @default(autoincrement()) @id
+  nome String
+  produtos Produto[]
+}
+model Anexo{
+  id Int @default(autoincrement()) @id
+  produto Produto? @relation(fields: [idProduto], references: [id])
+  idProduto Int?
+  plano Plano? @relation(fields: [idPlano], references: [id])
+  idPlano Int?
+  arquivo Bytes
+  tipo String
+}

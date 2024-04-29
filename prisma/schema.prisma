@@ -29,7 +29,7 @@ model Contato {
 model Carrinho {
   id    Int     @default(autoincrement()) @id
   idProduto Int 
-  idCliente Int
+  idUsuario Int
   qntProduto Int
   idPlano Int
 }
@@ -65,7 +65,7 @@ model Usuario{
   nomeCompleto String
   email String
   senha String
-  fotoPerfil Bytes
+  fotoPerfil Bytes?
   cargo Cargo @relation(fields: [idCargo], references: [id])
   idCargo Int
   situacao Situacao @relation(fields: [idSituacao], references: [id])

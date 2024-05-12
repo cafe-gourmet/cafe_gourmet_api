@@ -17,18 +17,18 @@ export class UsuarioController {
     }
 
     @Get('find-one/:id')
-    async findOne(@Param('id') id: number) {
-        return this.usuarioService.findOne(id);
+    async findOne(@Param('id') id: string) {
+        return this.usuarioService.findOne(Number(id));
     }
 
-    // http://localhost:3000/238498239472934
+    // // http://localhost:3000/238498239472934
     @Put(':id')
     async update(@Param('id') id: number, @Body() data: UsuarioDTO) {
-        return this.usuarioService.update(id, data);
+        return this.usuarioService.update(Number(id), data);
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: number) {
-        return this.usuarioService.delete(id);
+    async delete(@Param('id') id: string) {
+        return this.usuarioService.delete(Number(id));
     }
 }

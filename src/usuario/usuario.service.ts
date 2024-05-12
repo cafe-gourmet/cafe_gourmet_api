@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Usuario, Prisma } from '@prisma/client';
 import { UsuarioDTO } from './usuario.dto';
@@ -25,11 +25,12 @@ export class UsuarioService {
     })
     return usuario;
   }
+
   async update(id: number, data: UsuarioDTO) {
     const usuarioExiste = await this.findOne(id);
 
     if (!usuarioExiste) {
-      throw new Error('Usuário não existe!');
+      throw new BadRequestException('Usuário não existe!');
     }
 
     return await this.prisma.usuario.update({
@@ -44,7 +45,7 @@ export class UsuarioService {
     const usuario = await this.findOne(id);
 
     if (!usuario) {
-      throw new Error('Usuário não existe!');
+      throw new BadRequestException('Usuário não existe!');
     }
     //vou criar um enum depois pra tratar as situações. 1- ativo, 2- inativo;
     usuario.idSituacao = 2;

@@ -29,9 +29,8 @@ model Contato {
 model Carrinho {
   id    Int     @default(autoincrement()) @id
   idProduto Int 
-  idUsuario Int
   qntProduto Int
-  idPlano Int
+  idCliente Int 
 }
 model Situacao{
   id Int @default(autoincrement()) @id

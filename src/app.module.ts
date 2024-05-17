@@ -8,9 +8,14 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { PlanoPeriodoModule } from './plano-periodo/plano-periodo.module';
 import { PlanoModule } from './plano/plano.module';
 import { ClienteModule } from './cliente/cliente.module';
+import { CategoriaModule } from './categoria/categoria.module';
+import { ProdutoModule } from './produto/produto.module';
+import { PermissaoModule } from './permissao/permissao.module';
+import { SobreNosModule } from './sobre-nos/sobre-nos.module';
 
 @Module({
-  imports: [CarrinhoModule, CargoModule, SituacaoModule, UsuarioModule, PlanoPeriodoModule, PlanoModule, ClienteModule],
+  imports: [CarrinhoModule, CargoModule, SituacaoModule, UsuarioModule, PlanoPeriodoModule, 
+    PlanoModule, ClienteModule, CategoriaModule,ProdutoModule, PermissaoModule, SobreNosModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -104,7 +104,7 @@ model Produto{
   nome String
   marca String
   preco Float
-  codigoBarras BigInt
+  codigoBarras String
   categoria Categoria @relation(fields: [idCategoria], references: [id])
   idCategoria Int
   quantidade Int

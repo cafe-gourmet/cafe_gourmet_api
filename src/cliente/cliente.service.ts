@@ -1,17 +1,35 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Cliente, Prisma } from '@prisma/client';
-import { ClienteDTO } from './cliente.dto';
+import { ClienteDTO,ClienteClassDTO} from './cliente.dto';
 
 @Injectable()
 export class ClienteService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: ClienteDTO){
+  async create(dados: ClienteClassDTO){
     //verificar se o usuário ta ativo antes de criar
     const cliente = await this.prisma.cliente.create({
-      data,
-    })
+      data:{
+        cpf: dados.cpf,
+        telefone: dados.telefone,
+        idUsuario: dados.idUsuario,
+        planoId:null,
+        endereco: {
+          create:{
+            cep: dados.endereco.cep,
+            estado: dados.endereco.estado,
+            cidade: dados.endereco.cidade,
+            bairro: dados.endereco.bairro,
+            rua: dados.endereco.rua,
+            numero: dados.endereco.numero
+          }
+        }
+      },
+      include:{
+        endereco: true
+      }
+    });
     return cliente;
   }
   async findOne(idUsuario: number){
@@ -26,20 +44,20 @@ export class ClienteService {
     return this.prisma.cliente.findMany();
   }
 
-  async update(id: number, data: ClienteDTO) {
-    const cliente = await this.findOne(id);
+  // async update(id: number, data: ClienteDTO) {
+  //   const cliente = await this.findOne(id);
 
-    if (!cliente) {
-      throw new BadRequestException('Cliente não existe!');
-    }
+  //   if (!cliente) {
+  //     throw new BadRequestException('Cliente não existe!');
+  //   }
 
-    return await this.prisma.cliente.update({
-      data,
-      where: {
-        id,
-      },
-    });
-  }
+  //   return await this.prisma.cliente.update({
+  //     data,
+  //     where: {
+  //       id,
+  //     },
+  //   });
+  // }
 
   async delete(idUsuario: number) {
     const cliente = await this.findOne(idUsuario);

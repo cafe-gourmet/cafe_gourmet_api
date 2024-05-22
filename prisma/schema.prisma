@@ -75,11 +75,11 @@ model Cliente{
   id Int @default(autoincrement()) @id
   cpf String
   telefone String
-  endereco String
-  plano Plano @relation(fields: [planoId], references: [id])
-  planoId Int
+  plano Plano? @relation(fields: [planoId], references: [id])
+  planoId Int?
   usuario Usuario @relation(fields: [idUsuario], references: [id])
   idUsuario Int @unique
+  endereco Endereco?
 }
 model Plano{
   id Int @default(autoincrement()) @id
@@ -133,4 +133,15 @@ model Anexo{
   idPlano Int?
   arquivo Bytes
   tipo String
+}
+model Endereco {
+  id Int @default(autoincrement()) @id
+  cep String
+  estado String
+  cidade String
+  bairro String
+  rua String
+  numero String
+  cliente Cliente @relation(fields: [idCliente], references: [id])
+  idCliente Int @unique
 }

@@ -1,11 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Usuario, Prisma } from '@prisma/client';
-import { UsuarioDTO } from './usuario.dto';
+import {UsuarioClienteDTO, UsuarioDTO} from './usuario.dto';
+import { ClienteService } from 'src/cliente/cliente.service';
+import { DefaultDeserializer } from 'v8';
 
 @Injectable()
 export class UsuarioService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private clienteService: ClienteService) {}
 
   async findOne(idUsuario: number){
     return this.prisma.usuario.findUnique({
@@ -19,10 +21,32 @@ export class UsuarioService {
     return this.prisma.usuario.findMany();
   }
 
-  async create(data: UsuarioDTO){
+  async create(dados: UsuarioClienteDTO){
     const usuario = await this.prisma.usuario.create({
-      data,
-    })
+      data: {
+        nomeCompleto: dados.nomeCompleto,
+        email: dados.email,
+        senha: dados.senha,
+        idCargo: 2,
+        idSituacao: 1
+      },
+    });
+    
+    this.clienteService.create({
+      cpf: dados.cpf,
+      telefone: dados.telefone,
+      planoId: 0,
+      idUsuario: usuario.id,
+      endereco: {
+        cep: dados.endereco.cep,
+        estado: dados.endereco.estado,
+        cidade: dados.endereco.cidade,
+        bairro: dados.endereco.bairro,
+        rua: dados.endereco.rua,
+        numero: dados.endereco.numero
+      }
+    });
+
     return usuario;
   }
 

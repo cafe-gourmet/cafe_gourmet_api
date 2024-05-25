@@ -9,10 +9,10 @@ import { DefaultDeserializer } from 'v8';
 export class UsuarioService {
   constructor(private prisma: PrismaService, private clienteService: ClienteService) {}
 
-  async findOne(idUsuario: number){
-    return this.prisma.usuario.findUnique({
+  async findOne(email: string){
+    return this.prisma.usuario.findFirst({
       where: {
-      id: idUsuario,
+        email: email,
       }
     });
   }
@@ -50,30 +50,30 @@ export class UsuarioService {
     return usuario;
   }
 
-  async update(id: number, data: UsuarioDTO) {
-    const usuarioExiste = await this.findOne(id);
+  // async update(id: number, data: UsuarioDTO) {
+  //   const usuarioExiste = await this.findOne(id);
 
-    if (!usuarioExiste) {
-      throw new BadRequestException('Usuário não existe!');
-    }
+  //   if (!usuarioExiste) {
+  //     throw new BadRequestException('Usuário não existe!');
+  //   }
 
-    return await this.prisma.usuario.update({
-      data,
-      where: {
-        id,
-      },
-    });
-  }
+  //   return await this.prisma.usuario.update({
+  //     data,
+  //     where: {
+  //       id,
+  //     },
+  //   });
+  // }
 
-  async delete(id: number) {
-    const usuario = await this.findOne(id);
+  // async delete(id: number) {
+  //   const usuario = await this.findOne(id);
 
-    if (!usuario) {
-      throw new BadRequestException('Usuário não existe!');
-    }
-    //vou criar um enum depois pra tratar as situações. 1- ativo, 2- inativo;
-    usuario.idSituacao = 2;
+  //   if (!usuario) {
+  //     throw new BadRequestException('Usuário não existe!');
+  //   }
+  //   //vou criar um enum depois pra tratar as situações. 1- ativo, 2- inativo;
+  //   usuario.idSituacao = 2;
 
-    return await this.update(id, usuario);
-  }
+  //   return await this.update(id, usuario);
+  // }
 }

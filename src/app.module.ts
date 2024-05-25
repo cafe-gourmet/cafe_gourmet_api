@@ -12,10 +12,12 @@ import { CategoriaModule } from './categoria/categoria.module';
 import { ProdutoModule } from './produto/produto.module';
 import { PermissaoModule } from './permissao/permissao.module';
 import { SobreNosModule } from './sobre-nos/sobre-nos.module';
+import { AutenticacaoModule } from './auth/autenticacao.module';
 
 @Module({
   imports: [CarrinhoModule, CargoModule, SituacaoModule, UsuarioModule, PlanoPeriodoModule, 
-    PlanoModule, ClienteModule, CategoriaModule,ProdutoModule, PermissaoModule, SobreNosModule],
+    PlanoModule, ClienteModule, CategoriaModule,ProdutoModule, PermissaoModule, SobreNosModule,
+    AutenticacaoModule],
   controllers: [AppController],
   providers: [AppService],
 })

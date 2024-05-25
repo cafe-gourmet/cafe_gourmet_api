@@ -6,7 +6,8 @@ import { ClienteService } from 'src/cliente/cliente.service';
 
 @Module({
     controllers:[UsuarioController],
-    providers: [UsuarioService,PrismaService, ClienteService]
+    providers: [UsuarioService,PrismaService, ClienteService],
+    exports:[UsuarioService]
 
 })
 export class UsuarioModule {}

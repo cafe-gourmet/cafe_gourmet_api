@@ -16,19 +16,18 @@ export class UsuarioController {
         return this.usuarioService.findAll();
     }
 
-    @Get('find-one/:id')
-    async findOne(@Param('id') id: string) {
-        return this.usuarioService.findOne(Number(id));
+    @Get('find-one/:email')
+    async findOne(@Param('email') cpf: string) {
+        return this.usuarioService.findOne(cpf);
     }
 
-    // // http://localhost:3000/238498239472934
-    @Put(':id')
-    async update(@Param('id') id: number, @Body() data: UsuarioDTO) {
-        return this.usuarioService.update(Number(id), data);
-    }
+    // @Put(':id')
+    // async update(@Param('id') id: number, @Body() data: UsuarioDTO) {
+    //     return this.usuarioService.update(Number(id), data);
+    // }
 
-    @Delete(':id')
-    async delete(@Param('id') id: string) {
-        return this.usuarioService.delete(Number(id));
-    }
+    // @Delete(':id')
+    // async delete(@Param('id') id: string) {
+    //     return this.usuarioService.delete(Number(id));
+    // }
 }

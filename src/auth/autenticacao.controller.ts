@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { AutenticacaoService } from './autenticacao.service';
+import { AutenticacaoGuard } from './autenticacao.guard';
 import { AutenticacaoDTO } from './autenticacao.dto';
 
 @Controller('autenticacao')
@@ -10,5 +11,11 @@ export class AutenticacaoController {
     @Post('login')
     signIn(@Body() autenticacaoDTO: AutenticacaoDTO) {
       return this.autenticacaoService.signIn(autenticacaoDTO.email, autenticacaoDTO.senha);
+    }
+
+    @UseGuards(AutenticacaoGuard)
+    @Get('profile')
+    getUser(@Request() req) {
+      return req.user;
     }
 }

@@ -4,14 +4,12 @@ import { SituacaoDTO } from './situacao.dto';
 
 @Injectable()
 export class SituacaoService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-
-  async create(data: SituacaoDTO){
+  async create(data: SituacaoDTO) {
     const situacao = await this.prisma.situacao.create({
       data,
-    })
+    });
     return situacao;
   }
-
 }

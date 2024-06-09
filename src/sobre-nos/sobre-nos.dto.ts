@@ -1,3 +1,3 @@
 export type SobreNosDTO = {
-    descricao: string;
-}
+  descricao: string;
+};

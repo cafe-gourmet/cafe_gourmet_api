@@ -4,8 +4,7 @@ import { PermissaoService } from './permissao.service';
 import { PrismaService } from 'src/prisma.service';
 
 @Module({
-    controllers:[PermissaoController],
-    providers: [PermissaoService, PrismaService]
-
+  controllers: [PermissaoController],
+  providers: [PermissaoService, PrismaService],
 })
 export class PermissaoModule {}

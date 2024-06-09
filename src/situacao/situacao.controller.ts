@@ -4,11 +4,10 @@ import { SituacaoDTO } from './situacao.dto';
 
 @Controller('situacao')
 export class SituacaoController {
-    constructor(private readonly situacaoService: SituacaoService){}
+  constructor(private readonly situacaoService: SituacaoService) {}
 
-    @Post()
-    async create(@Body() data: SituacaoDTO){
-        return this.situacaoService.create(data);
-    }
-
+  @Post()
+  async create(@Body() data: SituacaoDTO) {
+    return this.situacaoService.create(data);
+  }
 }

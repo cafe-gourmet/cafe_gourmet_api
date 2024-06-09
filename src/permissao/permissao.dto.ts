@@ -1,3 +1,3 @@
 export type PermissaoDTO = {
-    descricao: string;
-}
+  descricao: string;
+};

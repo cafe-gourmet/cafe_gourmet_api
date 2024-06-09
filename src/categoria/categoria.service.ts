@@ -4,31 +4,29 @@ import { CategoriaDTO } from './categoria.dto';
 
 @Injectable()
 export class CategoriaService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-
-  async create(data: CategoriaDTO){
+  async create(data: CategoriaDTO) {
     const categoria = await this.prisma.categoria.create({
       data,
-    })
+    });
     return categoria;
   }
 
-  async findOne(idCategoria: number){
+  async findOne(idCategoria: number) {
     return this.prisma.categoria.findUnique({
       where: {
-      id: idCategoria,
-      }
+        id: idCategoria,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.categoria.findMany();
   }
 
   async update(id: number, data: CategoriaDTO) {
-
-    if (!await this.findOne(id)) {
+    if (!(await this.findOne(id))) {
       throw new BadRequestException('Categoria não existe!');
     }
 
@@ -46,11 +44,11 @@ export class CategoriaService {
     if (!categoria) {
       throw new BadRequestException('Categoria não existe!');
     }
-    
+
     return await this.prisma.categoria.delete({
-      where:{
+      where: {
         id,
-      }
+      },
     });
   }
 }

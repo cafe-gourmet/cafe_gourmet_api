@@ -4,31 +4,29 @@ import { PermissaoDTO } from './permissao.dto';
 
 @Injectable()
 export class PermissaoService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-
-  async create(data: PermissaoDTO){
+  async create(data: PermissaoDTO) {
     const permissao = await this.prisma.permissao.create({
       data,
-    })
+    });
     return permissao;
   }
 
-  async findOne(idPermissao: number){
+  async findOne(idPermissao: number) {
     return this.prisma.permissao.findUnique({
       where: {
-      id: idPermissao,
-      }
+        id: idPermissao,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.permissao.findMany();
   }
 
   async update(id: number, data: PermissaoDTO) {
-
-    if (!await this.findOne(id)) {
+    if (!(await this.findOne(id))) {
       throw new BadRequestException('Permissao não existe!');
     }
 
@@ -46,11 +44,11 @@ export class PermissaoService {
     if (!permissao) {
       throw new BadRequestException('Permissao não existe!');
     }
-    
+
     return await this.prisma.permissao.delete({
-      where:{
+      where: {
         id,
-      }
+      },
     });
   }
 }

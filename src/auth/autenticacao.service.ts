@@ -4,10 +4,15 @@ import { UsuarioService } from 'src/usuario/usuario.service';
 
 @Injectable()
 export class AutenticacaoService {
+  constructor(
+    private usuarioService: UsuarioService,
+    private jwtService: JwtService,
+  ) {}
 
-  constructor(private usuarioService: UsuarioService,private jwtService: JwtService){}
-
-  async signIn(email: string, senha: string,): Promise<{ access_token: string }> {
+  async signIn(
+    email: string,
+    senha: string,
+  ): Promise<{ access_token: string }> {
     const user = await this.usuarioService.findOne(email);
     if (user?.senha !== senha) {
       throw new UnauthorizedException();

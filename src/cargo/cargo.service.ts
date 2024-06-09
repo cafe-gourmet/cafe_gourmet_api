@@ -4,31 +4,29 @@ import { CargoDTO } from './cargo.dto';
 
 @Injectable()
 export class CargoService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-
-  async create(data: CargoDTO){
+  async create(data: CargoDTO) {
     const cargo = await this.prisma.cargo.create({
       data,
-    })
+    });
     return cargo;
   }
 
-  async findOne(idCargo: number){
+  async findOne(idCargo: number) {
     return this.prisma.cargo.findUnique({
       where: {
-      id: idCargo,
-      }
+        id: idCargo,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.cargo.findMany();
   }
 
   async update(id: number, data: CargoDTO) {
-
-    if (!await this.findOne(id)) {
+    if (!(await this.findOne(id))) {
       throw new BadRequestException('Usuário não existe!');
     }
 

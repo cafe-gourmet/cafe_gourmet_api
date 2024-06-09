@@ -9,13 +9,19 @@ import { APP_GUARD } from '@nestjs/core';
 import { AutenticacaoGuard } from './autenticacao.guard';
 
 @Module({
-    controllers:[AutenticacaoController],
-    providers: [AutenticacaoService, PrismaService,{provide: APP_GUARD, useClass: AutenticacaoGuard}],
-    imports: [UsuarioModule, JwtModule.register({
-        global: true,
-        secret: jwtConstants.secret,
-        signOptions: { expiresIn: '1h' },
-      }),
-    ],
+  controllers: [AutenticacaoController],
+  providers: [
+    AutenticacaoService,
+    PrismaService,
+    { provide: APP_GUARD, useClass: AutenticacaoGuard },
+  ],
+  imports: [
+    UsuarioModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '1h' },
+    }),
+  ],
 })
 export class AutenticacaoModule {}

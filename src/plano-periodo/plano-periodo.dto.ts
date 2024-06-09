@@ -1,3 +1,3 @@
 export type PlanoPeriodoDTO = {
-    descricao: string;
-}
+  descricao: string;
+};

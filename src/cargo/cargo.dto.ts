@@ -1,4 +1,4 @@
 export type CargoDTO = {
-    nome: string;
-    idSituacao: number;
-}
+  nome: string;
+  idSituacao: number;
+};

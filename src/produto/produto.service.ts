@@ -4,31 +4,29 @@ import { ProdutoDTO } from './produto.dto';
 
 @Injectable()
 export class ProdutoService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-
-  async create(data: ProdutoDTO){
+  async create(data: ProdutoDTO) {
     const produto = await this.prisma.produto.create({
       data,
-    })
+    });
     return produto;
   }
 
-  async findOne(idProduto: number){
+  async findOne(idProduto: number) {
     return this.prisma.produto.findUnique({
       where: {
-      id: idProduto,
-      }
+        id: idProduto,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.produto.findMany();
   }
 
   async update(id: number, data: ProdutoDTO) {
-
-    if (!await this.findOne(id)) {
+    if (!(await this.findOne(id))) {
       throw new BadRequestException('Produto não existe!');
     }
 
@@ -46,11 +44,11 @@ export class ProdutoService {
     if (!produto) {
       throw new BadRequestException('Produto não existe!');
     }
-    
+
     return await this.prisma.produto.delete({
-      where:{
+      where: {
         id,
-      }
+      },
     });
   }
 }

@@ -4,8 +4,7 @@ import { PlanoController } from './plano.controller';
 import { PlanoService } from './plano.service';
 
 @Module({
-    controllers:[PlanoController],
-    providers: [PlanoService, PrismaService]
-
+  controllers: [PlanoController],
+  providers: [PlanoService, PrismaService],
 })
 export class PlanoModule {}

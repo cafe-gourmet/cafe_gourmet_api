@@ -1,34 +1,34 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { ClienteClassDTO } from './cliente.dto';
 import { ClienteService } from './cliente.service';
-import { ClienteDTO, ClienteClassDTO} from './cliente.dto';
 
 @Controller('cliente')
 export class ClienteController {
-    constructor(private readonly clienteService: ClienteService){}
+  constructor(private readonly clienteService: ClienteService) {}
 
-    @Post()
-    async create(@Body() data: ClienteClassDTO){
-        return this.clienteService.create(data);
-    }
-    
-    @Get('find')
-    async findAll() {
-        return this.clienteService.findAll();
-    }
+  @Post()
+  async create(@Body() data: ClienteClassDTO) {
+    return this.clienteService.create(data);
+  }
 
-    @Get('find-one/:id')
-    async findOne(@Param('id') id: string) {
-        return this.clienteService.findOne(Number(id));
-    }
+  @Get('find')
+  async findAll() {
+    return this.clienteService.findAll();
+  }
 
-    // // // http://localhost:3000/238498239472934
-    // @Put(':id')
-    // async update(@Param('id') id: number, @Body() data: ClienteDTO) {
-    //     return this.clienteService.update(Number(id), data);
-    // }
+  @Get('find-one/:id')
+  async findOne(@Param('id') id: string) {
+    return this.clienteService.findOne(Number(id));
+  }
 
-    @Delete(':id')
-    async delete(@Param('id') id: string) {
-        return this.clienteService.delete(Number(id));
-    }
+  // // // http://localhost:3000/238498239472934
+  // @Put(':id')
+  // async update(@Param('id') id: number, @Body() data: ClienteDTO) {
+  //     return this.clienteService.update(Number(id), data);
+  // }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return this.clienteService.delete(Number(id));
+  }
 }

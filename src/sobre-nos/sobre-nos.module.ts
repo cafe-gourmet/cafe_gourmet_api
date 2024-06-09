@@ -4,8 +4,7 @@ import { SobreNosController } from './sobre-nos.controller';
 import { SobreNosService } from './sobre-nos.service';
 
 @Module({
-    controllers:[SobreNosController],
-    providers: [SobreNosService, PrismaService]
-
+  controllers: [SobreNosController],
+  providers: [SobreNosService, PrismaService],
 })
 export class SobreNosModule {}

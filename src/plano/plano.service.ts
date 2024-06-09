@@ -4,24 +4,23 @@ import { PlanoDTO } from './plano.dto';
 
 @Injectable()
 export class PlanoService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-  
-  async findOne(idPlano: number){
+  async findOne(idPlano: number) {
     return this.prisma.plano.findUnique({
       where: {
-      id: idPlano,
-      }
+        id: idPlano,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.plano.findMany();
   }
-  async create(data: PlanoDTO){
+  async create(data: PlanoDTO) {
     const plano = await this.prisma.plano.create({
       data,
-    })
+    });
     return plano;
   }
   async update(id: number, data: PlanoDTO) {

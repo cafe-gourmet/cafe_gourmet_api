@@ -3,11 +3,12 @@ import { UsuarioController } from './usuario.controller';
 import { UsuarioService } from './usuario.service';
 import { PrismaService } from 'src/prisma.service';
 import { ClienteService } from 'src/cliente/cliente.service';
+import { EnderecoModule } from 'src/endereco/endereco.module';
 
 @Module({
-    controllers:[UsuarioController],
-    providers: [UsuarioService,PrismaService, ClienteService],
-    exports:[UsuarioService]
-
+  imports: [EnderecoModule],
+  controllers: [UsuarioController],
+  providers: [UsuarioService, PrismaService, ClienteService],
+  exports: [UsuarioService],
 })
 export class UsuarioModule {}

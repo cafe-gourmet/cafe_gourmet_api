@@ -4,30 +4,28 @@ import { PlanoPeriodoDTO } from './plano-periodo.dto';
 
 @Injectable()
 export class PlanoPeriodoService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor(private prisma: PrismaService){}
-
-  async findOne(idPlanoPeriodo: number){
+  async findOne(idPlanoPeriodo: number) {
     return this.prisma.planoPeriodo.findUnique({
       where: {
-      id: idPlanoPeriodo,
-      }
+        id: idPlanoPeriodo,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.planoPeriodo.findMany();
   }
 
-  async create(data: PlanoPeriodoDTO){
+  async create(data: PlanoPeriodoDTO) {
     const planoPeriodo = await this.prisma.planoPeriodo.create({
       data,
-    })
+    });
     return planoPeriodo;
   }
   async update(id: number, data: PlanoPeriodoDTO) {
-
-    if (!await this.findOne(id)) {
+    if (!(await this.findOne(id))) {
       throw new BadRequestException('Usuário não existe!');
     }
 
@@ -47,9 +45,9 @@ export class PlanoPeriodoService {
     }
 
     return await this.prisma.planoPeriodo.delete({
-      where:{
+      where: {
         id,
-      }
+      },
     });
   }
 }

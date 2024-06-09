@@ -1,46 +1,48 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Cliente, Prisma } from '@prisma/client';
-import { ClienteDTO,ClienteClassDTO} from './cliente.dto';
+import { ClienteClassDTO } from './cliente.dto';
+import { EnderecoService } from 'src/endereco/endereco.service';
+import { Cliente, Endereco } from '@prisma/client';
 
 @Injectable()
 export class ClienteService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly enderecoService: EnderecoService,
+  ) {}
 
-  async create(dados: ClienteClassDTO){
-    //verificar se o usuário ta ativo antes de criar
-    const cliente = await this.prisma.cliente.create({
-      data:{
+  async create(dados: ClienteClassDTO) {
+    const cliente: Cliente = await this.prisma.cliente.create({
+      data: {
         cpf: dados.cpf,
         telefone: dados.telefone,
         idUsuario: dados.idUsuario,
-        planoId:null,
-        endereco: {
-          create:{
-            cep: dados.endereco.cep,
-            estado: dados.endereco.estado,
-            cidade: dados.endereco.cidade,
-            bairro: dados.endereco.bairro,
-            rua: dados.endereco.rua,
-            numero: dados.endereco.numero
-          }
-        }
+        planoId: null,
       },
-      include:{
-        endereco: true
-      }
     });
-    return cliente;
+
+    const endereco: Endereco = await this.enderecoService.create({
+      cep: dados.endereco.cep,
+      estado: dados.endereco.estado,
+      cidade: dados.endereco.cidade,
+      bairro: dados.endereco.bairro,
+      rua: dados.endereco.rua,
+      numero: dados.endereco.numero,
+      idCliente: cliente.id,
+    });
+
+    return { ...cliente, endereco: endereco };
   }
-  async findOne(idUsuario: number){
+
+  async findOne(idUsuario: number) {
     return this.prisma.cliente.findUnique({
       where: {
-      id: idUsuario,
-      }
+        id: idUsuario,
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.cliente.findMany();
   }
 
@@ -69,7 +71,7 @@ export class ClienteService {
     return await this.prisma.cliente.delete({
       where: {
         id: idUsuario,
-      }
+      },
     });
-    }
+  }
 }

@@ -1,37 +1,39 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { Usuario, Prisma } from '@prisma/client';
-import {UsuarioClienteDTO, UsuarioDTO} from './usuario.dto';
+import { Injectable } from '@nestjs/common';
 import { ClienteService } from 'src/cliente/cliente.service';
-import { DefaultDeserializer } from 'v8';
+import { PrismaService } from '../prisma.service';
+import { UsuarioClienteDTO } from './usuario.dto';
 
 @Injectable()
 export class UsuarioService {
-  constructor(private prisma: PrismaService, private clienteService: ClienteService) {}
+  constructor(
+    private prisma: PrismaService,
+    private clienteService: ClienteService,
+  ) {}
 
-  async findOne(email: string){
+  async findOne(email: string) {
     return this.prisma.usuario.findFirst({
       where: {
         email: email,
-      }
+      },
     });
   }
-  
-  async findAll(){
+
+  async findAll() {
     return this.prisma.usuario.findMany();
   }
 
-  async create(dados: UsuarioClienteDTO){
+  async create(dados: UsuarioClienteDTO) {
+    console.log(dados);
     const usuario = await this.prisma.usuario.create({
       data: {
         nomeCompleto: dados.nomeCompleto,
         email: dados.email,
         senha: dados.senha,
         idCargo: 2,
-        idSituacao: 1
+        idSituacao: 1,
       },
     });
-    
+
     this.clienteService.create({
       cpf: dados.cpf,
       telefone: dados.telefone,
@@ -43,8 +45,8 @@ export class UsuarioService {
         cidade: dados.endereco.cidade,
         bairro: dados.endereco.bairro,
         rua: dados.endereco.rua,
-        numero: dados.endereco.numero
-      }
+        numero: dados.endereco.numero,
+      },
     });
 
     return usuario;

@@ -18,11 +18,22 @@ export class ProdutoService {
       where: {
         id: idProduto,
       },
+      include: {
+        categoria: true,
+        anexos: true,
+        planos: true,
+      },
     });
   }
 
   async findAll() {
-    return this.prisma.produto.findMany();
+    return this.prisma.produto.findMany({
+      include: {
+        categoria: true,
+        anexos: true,
+        planos: true,
+      },
+    });
   }
 
   async update(id: number, data: ProdutoDTO) {

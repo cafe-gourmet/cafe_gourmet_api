@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CarrinhoService } from './carrinho.service';
 import { CarrinhoDTO } from './carrinho.dto';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from 'src/authentication/public.decorator';
 
 @Controller('carrinho')
 export class CarrinhoController {

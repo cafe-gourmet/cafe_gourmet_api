@@ -12,7 +12,7 @@ import { CategoriaModule } from './categoria/categoria.module';
 import { ProdutoModule } from './produto/produto.module';
 import { PermissaoModule } from './permissao/permissao.module';
 import { SobreNosModule } from './sobre-nos/sobre-nos.module';
-import { AutenticacaoModule } from './auth/autenticacao.module';
+import { AutenticacaoModule } from './authentication/autenticacao.module';
 import { EnderecoModule } from './endereco/endereco.module';
 
 @Module({

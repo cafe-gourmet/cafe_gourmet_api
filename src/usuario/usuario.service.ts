@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { ClienteService } from 'src/cliente/cliente.service';
 import { PrismaService } from '../prisma.service';
 import { UsuarioClienteDTO } from './usuario.dto';
+import { CriptografiaService } from 'src/criptografia/criptografia.service';
 
 @Injectable()
 export class UsuarioService {
   constructor(
     private prisma: PrismaService,
     private clienteService: ClienteService,
+    private criptografiaService: CriptografiaService
   ) {}
 
   async findOne(email: string) {
@@ -23,12 +25,11 @@ export class UsuarioService {
   }
 
   async create(dados: UsuarioClienteDTO) {
-    console.log(dados);
     const usuario = await this.prisma.usuario.create({
       data: {
         nomeCompleto: dados.nomeCompleto,
         email: dados.email,
-        senha: dados.senha,
+        senha: await this.criptografiaService.encriptografar(dados.senha),
         idCargo: 2,
         idSituacao: 1,
       },
@@ -51,7 +52,6 @@ export class UsuarioService {
 
     return usuario;
   }
-
   // async update(id: number, data: UsuarioDTO) {
   //   const usuarioExiste = await this.findOne(id);
 

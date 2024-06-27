@@ -15,6 +15,6 @@ export type UsuarioClienteDTO = {
   senha: string;
   cpf: string;
   telefone: string;
-  fotoPerfil?: Buffer | null;
   endereco: EnderecoDTO;
+  fotoPerfil?: string | null;
 };

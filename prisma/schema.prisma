@@ -72,7 +72,7 @@ model Usuario {
   nomeCompleto String
   email        String
   senha        String
-  fotoPerfil   Bytes?
+  fotoPerfil   String?
   cargo        Cargo    @relation(fields: [idCargo], references: [id])
   idCargo      Int
   situacao     Situacao @relation(fields: [idSituacao], references: [id])
@@ -99,10 +99,12 @@ model Plano {
   situacao   Situacao        @relation(fields: [idSituacao], references: [id])
   idSituacao Int
   periodo    PlanoPeriodo    @relation(fields: [idPeriodo], references: [id])
+  imgPlano1  String?
+  imgPlano2  String?
+  imgPlano3  String?
   idPeriodo  Int
   clientes   Cliente[]
   produtos   PlanoProdutos[]
-  anexos     Anexo[]
 }
 
 model PlanoPeriodo {
@@ -122,8 +124,10 @@ model Produto {
   quantidade               Int
   percentualDescontoMensal Int
   percentualDescontoAnual  Int
+  imgProduto1              String?
+  imgProduto2              String?
+  imgProduto3              String?
   planos                   PlanoProdutos[]
-  anexos                   Anexo[]
 }
 
 model PlanoProdutos {
@@ -139,16 +143,6 @@ model Categoria {
   id       Int       @id @default(autoincrement())
   nome     String
   produtos Produto[]
-}
-
-model Anexo {
-  id        Int      @id @default(autoincrement())
-  produto   Produto? @relation(fields: [idProduto], references: [id])
-  idProduto Int?
-  plano     Plano?   @relation(fields: [idPlano], references: [id])
-  idPlano   Int?
-  arquivo   Bytes
-  tipo      String
 }
 
 model Endereco {

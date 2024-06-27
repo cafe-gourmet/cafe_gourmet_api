@@ -20,7 +20,6 @@ export class ProdutoService {
       },
       include: {
         categoria: true,
-        anexos: true,
         planos: true,
       },
     });
@@ -30,7 +29,6 @@ export class ProdutoService {
     return this.prisma.produto.findMany({
       include: {
         categoria: true,
-        anexos: true,
         planos: true,
       },
     });

@@ -32,6 +32,7 @@ export class UsuarioService {
         senha: await this.criptografiaService.encriptografar(dados.senha),
         idCargo: 2,
         idSituacao: 1,
+        fotoPerfil: dados.fotoPerfil
       },
     });
 

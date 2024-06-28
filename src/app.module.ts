@@ -14,6 +14,7 @@ import { PermissaoModule } from './permissao/permissao.module';
 import { SobreNosModule } from './sobre-nos/sobre-nos.module';
 import { AutenticacaoModule } from './authentication/autenticacao.module';
 import { EnderecoModule } from './endereco/endereco.module';
+import { PlanoClienteModule } from './plano-cliente/plano-cliente.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EnderecoModule } from './endereco/endereco.module';
     SobreNosModule,
     AutenticacaoModule,
     EnderecoModule,
+    PlanoClienteModule
   ],
   controllers: [AppController],
   providers: [AppService],

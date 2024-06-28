@@ -29,12 +29,6 @@ export class SobreNosController {
     return this.sobreNosService.findAll();
   }
 
-  // @Get('find-one/:id')
-  // @Public()
-  // async findOne(@Param('id') id: string) {
-  //   return this.sobreNosService.findOne(Number(id));
-  // }
-
   @Put(':id')
   @ApiBearerAuth()
   async update(@Param('id') id: number, @Body() data: SobreNosDTO) {

@@ -27,19 +27,4 @@ export class PlanoPeriodoController {
   async findAll() {
     return this.planoPeriodoService.findAll();
   }
-
-  // @Get('find-one/:id')
-  // async findOne(@Param('id') id: string) {
-  //   return this.planoPeriodoService.findOne(Number(id));
-  // }
-
-  // @Put(':id')
-  // async update(@Param('id') id: number, @Body() data: PlanoPeriodoDTO) {
-  //   return this.planoPeriodoService.update(Number(id), data);
-  // }
-
-  // @Delete(':id')
-  // async delete(@Param('id') id: string) {
-  //   return this.planoPeriodoService.delete(Number(id));
-  // }
 }

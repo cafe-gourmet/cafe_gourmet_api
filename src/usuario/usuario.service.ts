@@ -20,7 +20,7 @@ export class UsuarioService {
       include: {
         cliente: true,
         cargo: true,
-      }
+      },
     });
   }
 

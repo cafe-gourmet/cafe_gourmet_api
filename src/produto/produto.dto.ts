@@ -7,7 +7,7 @@ export type ProdutoDTO = {
   quantidade: number;
   percentualDescontoMensal: number;
   percentualDescontoAnual: number;
-  imgProduto1: string, 
-  imgProduto2: string, 
-  imgProduto3: string, 
+  imgProduto1?: string;
+  imgProduto2?: string;
+  imgProduto3?: string;
 };

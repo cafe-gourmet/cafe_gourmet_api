@@ -9,7 +9,7 @@ export class UsuarioService {
   constructor(
     private prisma: PrismaService,
     private clienteService: ClienteService,
-    private criptografiaService: CriptografiaService
+    private criptografiaService: CriptografiaService,
   ) {}
 
   async findOne(email: string) {
@@ -36,7 +36,7 @@ export class UsuarioService {
         senha: await this.criptografiaService.encriptografar(dados.senha),
         idCargo: 2,
         idSituacao: 1,
-        fotoPerfil: dados.fotoPerfil
+        fotoPerfil: dados.fotoPerfil,
       },
     });
 

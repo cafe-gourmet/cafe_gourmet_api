@@ -8,7 +8,19 @@ export class ProdutoService {
 
   async create(data: ProdutoDTO) {
     const produto = await this.prisma.produto.create({
-      data,
+      data: {
+        nome: data.nome,
+        marca: data.marca,
+        preco: data.preco,
+        codigoBarras: data.codigoBarras,
+        idCategoria: data.idCategoria,
+        quantidade: data.quantidade,
+        percentualDescontoAnual: data.percentualDescontoAnual,
+        percentualDescontoMensal: data.percentualDescontoMensal,
+        imgProduto1: data.imgProduto1,
+        imgProduto2: data.imgProduto2,
+        imgProduto3: data.imgProduto3,
+      }
     });
     return produto;
   }

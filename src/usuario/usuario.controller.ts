@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuarioClienteDTO, UsuarioDTO } from './usuario.dto';
 import { UsuarioService } from './usuario.service';
 import { Public } from '../authentication/public.decorator';
@@ -28,10 +28,10 @@ export class UsuarioController {
     return this.usuarioService.findOne(email);
   }
 
-  // @Put(':id')
-  // async update(@Param('id') id: number, @Body() data: UsuarioDTO) {
-  //     return this.usuarioService.update(Number(id), data);
-  // }
+  @Put()
+  async update(@Body() data: UsuarioClienteDTO) {
+      return this.usuarioService.update(data);
+  }
 
   // @Delete(':id')
   // async delete(@Param('id') id: string) {

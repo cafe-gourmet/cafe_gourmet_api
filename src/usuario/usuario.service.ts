@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ClienteService } from 'src/cliente/cliente.service';
 import { PrismaService } from '../prisma.service';
 import { UsuarioClienteDTO } from './usuario.dto';
@@ -61,20 +61,44 @@ export class UsuarioService {
 
     return usuario;
   }
-  // async update(id: number, data: UsuarioDTO) {
-  //   const usuarioExiste = await this.findOne(id);
+  async update(data: UsuarioClienteDTO) {
+    const usuarioExiste = await this.findOne(data.email);
 
-  //   if (!usuarioExiste) {
-  //     throw new BadRequestException('Usuário não existe!');
-  //   }
+    if (!usuarioExiste) {
+      throw new BadRequestException('Usuário não existe!');
+    }
 
-  //   return await this.prisma.usuario.update({
-  //     data,
-  //     where: {
-  //       id,
-  //     },
-  //   });
-  // }
+    var usuarioAtualizado= await this.prisma.usuario.update({
+      data : {
+        nomeCompleto: data.nomeCompleto,
+        email: data.email,
+        senha: await this.criptografiaService.encriptografar(data.senha),
+        idCargo: 2,
+        idSituacao: 1,
+        fotoPerfil: data.fotoPerfil,
+      },
+      include: {
+        cliente:{include:{endereco:true}},
+      },
+      where: {
+        id:data.id,
+      },
+    });
+    this.clienteService.update(usuarioAtualizado.cliente.id, {
+      cpf: data.cpf,
+      telefone: data.telefone,
+      idUsuario: data.id,
+      endereco: {
+        cep: data.endereco.cep,
+        estado: data.endereco.estado,
+        cidade: data.endereco.cidade,
+        bairro: data.endereco.bairro,
+        rua: data.endereco.rua,
+        numero: data.endereco.numero,
+      }
+    });
+    return usuarioAtualizado;
+  }
 
   // async delete(id: number) {
   //   const usuario = await this.findOne(id);

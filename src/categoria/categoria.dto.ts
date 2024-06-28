@@ -1,3 +1,6 @@
-export type CategoriaDTO = {
+import { ApiProperty } from "@nestjs/swagger";
+
+export class CategoriaDTO {
+  @ApiProperty()
   nome: string;
 };

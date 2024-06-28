@@ -13,9 +13,10 @@ async function bootstrap() {
     .setTitle('Café Gourmet')
     .setDescription('Fornece a documentação dos endpoints do Café Gourmet')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger', app, document);
   await app.listen(3000);
 }
 bootstrap();

@@ -9,13 +9,17 @@ import {
 } from '@nestjs/common';
 import { CategoriaService } from './categoria.service';
 import { CategoriaDTO } from './categoria.dto';
+import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('categoria')
+@ApiBearerAuth()
 export class CategoriaController {
   constructor(private readonly categoriaService: CategoriaService) {}
 
   @Post()
-  async create(@Body() data: CategoriaDTO) {
+  @ApiBody({ type: CategoriaDTO })
+  @ApiResponse({ status: 200, description: 'Retorna a Categoria recém criada', type: CategoriaDTO})
+  async create(@Body() data: CategoriaDTO): Promise<CategoriaDTO>{
     return this.categoriaService.create(data);
   }
 

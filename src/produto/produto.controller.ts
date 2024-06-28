@@ -9,12 +9,16 @@ import {
 } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { ProdutoDTO } from './produto.dto';
+import { ApiResponse,ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('produto')
+@ApiBearerAuth()
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
   @Post()
+  @ApiBody({ type: ProdutoDTO })
+  @ApiResponse({ status: 200, description: 'Retorna o período recém criado', type: ProdutoDTO})
   async create(@Body() data: ProdutoDTO) {
     return this.produtoService.create(data);
   }

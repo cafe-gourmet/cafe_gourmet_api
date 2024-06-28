@@ -9,13 +9,17 @@ import {
 } from '@nestjs/common';
 import { CargoService } from './cargo.service';
 import { CargoDTO } from './cargo.dto';
+import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('cargo')
+@ApiBearerAuth()
 export class CargoController {
   constructor(private readonly cargoService: CargoService) {}
 
   @Post()
-  async create(@Body() data: CargoDTO) {
+  @ApiBody({ type: CargoDTO })
+  @ApiResponse({ status: 200, description: 'Retorna o cargo recém criado', type:CargoDTO})
+  async create(@Body() data: CargoDTO):Promise<CargoDTO> {
     return this.cargoService.create(data);
   }
 

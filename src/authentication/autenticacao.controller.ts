@@ -12,14 +12,17 @@ import { AutenticacaoDTO } from './autenticacao.dto';
 import { AutenticacaoGuard } from './autenticacao.guard';
 import { AutenticacaoService } from './autenticacao.service';
 import { Public } from './public.decorator';
+import { ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('autenticacao')
+@Public()
 export class AutenticacaoController {
   constructor(private readonly autenticacaoService: AutenticacaoService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  @Public()
+  @ApiBody({ type: AutenticacaoDTO })
+  @ApiResponse({ status: 200, description: 'Devolve o token e o usuário autenticado'})
   signIn(@Body() autenticacaoDTO: AutenticacaoDTO) {
     return this.autenticacaoService.signIn(
       autenticacaoDTO.email,

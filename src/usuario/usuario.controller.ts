@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { UsuarioClienteDTO } from './usuario.dto';
+import { UsuarioClienteDTO, UsuarioDTO } from './usuario.dto';
 import { UsuarioService } from './usuario.service';
 import { Public } from '../authentication/public.decorator';
+import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('usuario')
 export class UsuarioController {
@@ -9,16 +10,20 @@ export class UsuarioController {
 
   @Post()
   @Public()
-  async create(@Body() data: UsuarioClienteDTO) {
+  @ApiBody({ type: UsuarioClienteDTO })
+  @ApiResponse({ status: 200, description: 'Devolve o usuário recém criado', type: UsuarioDTO })
+  async create(@Body() data: UsuarioClienteDTO): Promise<UsuarioDTO> {
     return this.usuarioService.create(data);
   }
-
+  
+  @ApiBearerAuth()
   @Get('find')
   async findAll() {
     return this.usuarioService.findAll();
   }
 
   @Get('find-one/:email')
+  @ApiBearerAuth()
   async findOne(@Param('email') email: string) {
     return this.usuarioService.findOne(email);
   }

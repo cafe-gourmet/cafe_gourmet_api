@@ -1,25 +1,29 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ClienteClassDTO } from './cliente.dto';
 import { ClienteService } from './cliente.service';
+import { ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('cliente')
+@ApiBearerAuth()
 export class ClienteController {
   constructor(private readonly clienteService: ClienteService) {}
 
-  @Post()
-  async create(@Body() data: ClienteClassDTO) {
-    return this.clienteService.create(data);
-  }
+  // @Post()
+  // @ApiBody({ type: ClienteClassDTO })
+  // @ApiResponse({ status: 200, description: 'Retorna o cliente recém criado'})
+  // async create(@Body() data: ClienteClassDTO) {
+  //   return this.clienteService.create(data);
+  // }
 
-  @Get('find')
-  async findAll() {
-    return this.clienteService.findAll();
-  }
+  // @Get('find')
+  // async findAll() {
+  //   return this.clienteService.findAll();
+  // }
 
-  @Get('find-one/:id')
-  async findOne(@Param('id') id: string) {
-    return this.clienteService.findOne(Number(id));
-  }
+  // @Get('find-one/:id')
+  // async findOne(@Param('id') id: string) {
+  //   return this.clienteService.findOne(Number(id));
+  // }
 
   // // // http://localhost:3000/238498239472934
   // @Put(':id')

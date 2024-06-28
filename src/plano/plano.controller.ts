@@ -9,12 +9,16 @@ import {
 } from '@nestjs/common';
 import { PlanoDTO } from './plano.dto';
 import { PlanoService } from './plano.service';
+import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('plano')
+@ApiBearerAuth()
 export class PlanoController {
   constructor(private readonly planoService: PlanoService) {}
 
   @Post()
+  @ApiBody({ type: PlanoDTO })
+  @ApiResponse({ status: 200, description: 'Retorna o plano recém criado', type: PlanoDTO})
   async create(@Body() data: PlanoDTO) {
     return this.planoService.create(data);
   }

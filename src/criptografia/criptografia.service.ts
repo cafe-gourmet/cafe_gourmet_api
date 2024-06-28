@@ -11,7 +11,7 @@ export class CriptografiaService {
   }
   
   async verificar(senha: string, hash: string): Promise<boolean> {
-    var senhaCrip = await this.encriptografar(senha);
-    return senhaCrip == hash;
+    const isMatch = await bcrypt.compare(senha, hash);
+    return isMatch;
   }
 }

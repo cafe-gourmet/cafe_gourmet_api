@@ -18,7 +18,11 @@ export class UsuarioService {
         email: email,
       },
       include: {
-        cliente: true,
+        cliente: {
+          include: {
+          endereco: true,
+          },
+        },
         cargo: true,
       },
     });

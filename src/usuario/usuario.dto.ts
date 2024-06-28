@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { EnderecoDTO } from 'src/endereco/endereco.dto';
 
 export class UsuarioDTO {
+  id: number;
   nomeCompleto: string;
   email: string;
   senha: string;

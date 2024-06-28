@@ -19,8 +19,8 @@ export class UsuarioController {
   }
 
   @Get('find-one/:email')
-  async findOne(@Param('email') cpf: string) {
-    return this.usuarioService.findOne(cpf);
+  async findOne(@Param('email') email: string) {
+    return this.usuarioService.findOne(email);
   }
 
   // @Put(':id')

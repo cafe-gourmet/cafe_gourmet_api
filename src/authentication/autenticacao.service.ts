@@ -20,7 +20,7 @@ export class AutenticacaoService {
     if (await this.criptografiaService.verificar(senha,user.senha)) {
       throw new UnauthorizedException();
     }
-    const payload = { sub: user.email, username: user.senha };
+    const payload = { authUser: user };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

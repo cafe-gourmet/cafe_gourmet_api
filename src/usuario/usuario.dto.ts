@@ -4,7 +4,7 @@ export class UsuarioDTO {
   nomeCompleto: string;
   email: string;
   senha: string;
-  fotoPerfil?: Buffer | null;
+  fotoPerfil?: string | null;
   idCargo: number;
   idSituacao: number;
   idCliente?: number | null;

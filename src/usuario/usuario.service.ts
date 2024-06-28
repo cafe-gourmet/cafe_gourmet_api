@@ -17,6 +17,10 @@ export class UsuarioService {
       where: {
         email: email,
       },
+      include: {
+        cliente: true,
+        cargo: true,
+      }
     });
   }
 

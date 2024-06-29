@@ -7,10 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { SobreNosService } from './sobre-nos.service';
-import { SobreNosDTO } from './sobre-nos.dto';
 import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
-import { Public } from 'src/authentication/public.decorator';
+import { SobreNosDTO } from './sobre-nos.dto';
+import { SobreNosService } from './sobre-nos.service';
 
 @Controller('sobre-nos')
 export class SobreNosController {
@@ -19,7 +18,10 @@ export class SobreNosController {
   @Post()
   @ApiBody({ type: SobreNosDTO })
   @ApiBearerAuth()
-  @ApiResponse({ status: 200, description: 'Retorna o conteúdo de Sobre Nós recém criado'})
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna o conteúdo de Sobre Nós recém criado',
+  })
   async create(@Body() data: SobreNosDTO) {
     return this.sobreNosService.create(data);
   }

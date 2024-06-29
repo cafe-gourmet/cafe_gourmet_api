@@ -10,7 +10,7 @@ export class SituacaoController {
 
   @Post()
   @ApiBody({ type: SituacaoDTO })
-  @ApiResponse({ status: 200, description: 'Retorna a situação recém criada'})
+  @ApiResponse({ status: 200, description: 'Retorna a situação recém criada' })
   async create(@Body() data: SituacaoDTO) {
     return this.situacaoService.create(data);
   }

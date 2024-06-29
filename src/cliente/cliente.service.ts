@@ -41,8 +41,8 @@ export class ClienteService {
       },
       include: {
         endereco: true,
-        plano: true
-      }
+        plano: true,
+      },
     });
   }
 
@@ -61,20 +61,20 @@ export class ClienteService {
         telefone: data.telefone,
         planoId: data.planoId,
         idUsuario: data.idUsuario,
-        endereco: { 
+        endereco: {
           update: {
             cep: data.endereco.cep,
             estado: data.endereco.estado,
             cidade: data.endereco.cidade,
             bairro: data.endereco.bairro,
             rua: data.endereco.rua,
-            numero: data.endereco.numero
-          } 
-        }
+            numero: data.endereco.numero,
+          },
+        },
       },
       include: {
-        endereco:true,
-        usuario:true
+        endereco: true,
+        usuario: true,
       },
       where: {
         id,

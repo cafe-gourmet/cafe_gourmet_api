@@ -31,7 +31,7 @@ import { PlanoClienteModule } from './plano-cliente/plano-cliente.module';
     SobreNosModule,
     AutenticacaoModule,
     EnderecoModule,
-    PlanoClienteModule
+    PlanoClienteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

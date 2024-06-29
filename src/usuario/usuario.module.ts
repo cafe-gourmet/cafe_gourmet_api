@@ -9,7 +9,12 @@ import { CriptografiaService } from 'src/criptografia/criptografia.service';
 @Module({
   imports: [EnderecoModule],
   controllers: [UsuarioController],
-  providers: [UsuarioService, PrismaService, ClienteService, CriptografiaService],
+  providers: [
+    UsuarioService,
+    PrismaService,
+    ClienteService,
+    CriptografiaService,
+  ],
   exports: [UsuarioService],
 })
 export class UsuarioModule {}

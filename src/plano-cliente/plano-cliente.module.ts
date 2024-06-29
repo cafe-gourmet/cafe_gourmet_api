@@ -7,6 +7,6 @@ import { ClienteModule } from 'src/cliente/cliente.module';
 @Module({
   controllers: [PlanoClienteController],
   providers: [PlanoClienteService, PrismaService],
-  imports:[ClienteModule]
+  imports: [ClienteModule],
 })
 export class PlanoClienteModule {}

@@ -11,11 +11,15 @@ export class UsuarioController {
   @Post()
   @Public()
   @ApiBody({ type: UsuarioClienteDTO })
-  @ApiResponse({ status: 200, description: 'Devolve o usuário recém criado', type: UsuarioDTO })
+  @ApiResponse({
+    status: 200,
+    description: 'Devolve o usuário recém criado',
+    type: UsuarioDTO,
+  })
   async create(@Body() data: UsuarioClienteDTO): Promise<UsuarioDTO> {
     return this.usuarioService.create(data);
   }
-  
+
   @ApiBearerAuth()
   @Get('find')
   async findAll() {
@@ -30,7 +34,7 @@ export class UsuarioController {
 
   @Put()
   async update(@Body() data: UsuarioClienteDTO) {
-      return this.usuarioService.update(data);
+    return this.usuarioService.update(data);
   }
 
   // @Delete(':id')

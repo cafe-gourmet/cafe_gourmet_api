@@ -18,7 +18,11 @@ export class PlanoController {
 
   @Post()
   @ApiBody({ type: PlanoDTO })
-  @ApiResponse({ status: 200, description: 'Retorna o plano recém criado', type: PlanoDTO})
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna o plano recém criado',
+    type: PlanoDTO,
+  })
   async create(@Body() data: PlanoDTO) {
     return this.planoService.create(data);
   }

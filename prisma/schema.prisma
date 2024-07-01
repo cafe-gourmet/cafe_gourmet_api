@@ -29,10 +29,13 @@ model Contato {
 }
 
 model Carrinho {
-  id         Int @id @default(autoincrement())
-  idProduto  Int
-  qntProduto Int
-  idCliente  Int
+  id             Int      @id @default(autoincrement())
+  idProduto      Int?
+  idPlano        Int?
+  qntProduto     Int?
+  idCliente      Int
+  statusCarrinho Boolean?
+  statusCompra   Boolean?
 }
 
 model Situacao {

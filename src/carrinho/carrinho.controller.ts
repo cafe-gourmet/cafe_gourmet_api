@@ -1,28 +1,34 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CarrinhoService } from './carrinho.service';
 import { CarrinhoDTO } from './carrinho.dto';
 import { Public } from 'src/authentication/public.decorator';
 
 @Controller('carrinho')
+@Public()
 export class CarrinhoController {
   constructor(private readonly carrinhoService: CarrinhoService) {}
 
-  @Post('add')
-  async add(@Body() data: CarrinhoDTO) {
-    return this.carrinhoService.adicionarAoCarrinho(data);
+  @Post('adicionar')
+  async criarCarrinho(@Body() data: CarrinhoDTO[]) {
+    return await this.carrinhoService.criarCarrinho(data);
   }
-  @Post('remove')
-  async remove(@Body() data: CarrinhoDTO) {
-    return this.carrinhoService.removerDoCarrinho(data);
+  @Put('confirmarCompra/:id')
+  async confirmarCompra(@Param('id') idCliente: string) {
+    console.log(idCliente)
+    return this.carrinhoService.confirmarCompra(Number(idCliente));
   }
-
-  @Public()
-  @Get(':idCliente')
-  async find(@Param('idCliente') idCliente: string) {
-    return this.carrinhoService.findAll(Number(idCliente));
+  @Put('cancelarCompra/:id')
+  async cancelarCompra(@Param('id') idCliente: string) {
+    return this.carrinhoService.cancelarCompra(Number(idCliente));
   }
-  @Delete(':idCliente')
-  async delete(@Param('idCliente') idCliente: string) {
-    return this.carrinhoService.limparCarrinho(Number(idCliente));
+  //essa aqui usa no relatorio
+  @Get('obterTodasCompras/:id')
+  async obterTodasCompras(@Param('id') idCliente: string) {
+    return this.carrinhoService.obterTodasCompras(Number(idCliente));
+  }
+  //essa aqui usa no admin pra confirmar o pagamento
+  @Get('obterUltimaCompra/:id')
+  async obterUltimaCompra(@Param('id') idCliente: string) {
+    return this.carrinhoService.obterUltimaCompra(Number(idCliente));
   }
 }

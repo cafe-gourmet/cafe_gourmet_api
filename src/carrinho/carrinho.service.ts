@@ -1,41 +1,77 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CarrinhoDTO } from '../carrinho/carrinho.dto';
 import { PrismaService } from 'src/prisma.service';
+import { PlanoClienteService } from 'src/plano-cliente/plano-cliente.service';
 
 @Injectable()
 export class CarrinhoService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private planoClienteService: PlanoClienteService) {}
 
-  async adicionarAoCarrinho(data: CarrinhoDTO) {
-    if (!(await this.findOne(data))) return this.criarCarrinho(data);
-    else return this.update(data);
-  }
-  async removerDoCarrinho(data: CarrinhoDTO) {
-    if (!this.findOne(data))
-      throw new BadRequestException('Não existe esse produto no Carrinho!');
-
-    return this.update(data);
-  }
-
-  async criarCarrinho(data: CarrinhoDTO) {
-    const carrinho = await this.prisma.carrinho.create({
-      data,
+  async obterUltimaCompra(idCliente: number): Promise<CarrinhoDTO[]> {
+    return this.prisma.carrinho.findMany({
+      where: {
+        idCliente: idCliente,
+        statusCarrinho: true,
+      },
     });
-    return carrinho;
+  }
+ async obterTodasCompras(idCliente: number): Promise<CarrinhoDTO[]> {
+    return this.prisma.carrinho.findMany({
+      where: {
+        idCliente: idCliente
+      },
+    });
+  }
+  //nasce com carrinho ativa e compra inativa
+  //statusCarrinho = 1 e statusCompra = 0 -> aguardando pagamento
+  //statusCarrinho = 0 e statusCompra = 1 -> compra aprovada
+  //statuaCarrinho = 0 e statusCompra = 0 -> compra cancelada
+  async criarCarrinho(data: CarrinhoDTO[]) {
+    return data.forEach(async (cart) => await this.prisma.carrinho.create({
+      data: {
+        idCliente: cart.idCliente,
+        idPlano: cart.idPlano,
+        idProduto: cart.idProduto,
+        qntProduto: cart.idPlano,
+        statusCarrinho: true,
+        statusCompra: false
+      },
+    }));
   }
 
-  async limparCarrinho(idCliente: number) {
-    const itensCarrinho = await this.findAll(idCliente);
-    console.log(itensCarrinho);
-    itensCarrinho.forEach(async (element) => {
-      await this.prisma.carrinho.delete({
-        where: {
-          id: element.id,
-        },
+  async confirmarCompra(idCliente: number) {
+    console.log(idCliente);
+    const itens = await this.obterUltimaCompra(idCliente);
+    if (itens) {
+      itens.forEach(async (item) => {
+        await this.prisma.carrinho.update({
+          data: {
+            statusCarrinho: false,
+            statusCompra: true
+          },
+          where: {
+            id: item.id,
+          }
+        });
+        if (item.idPlano)
+          await this.planoClienteService.vincular({idCliente: item.idCliente, idPlano: item.idPlano})
       });
-    });
+    }
   }
-
+  async cancelarCompra(idCliente: number) {
+    const itens = await this.obterUltimaCompra(idCliente);
+    if (itens) {
+      return itens.forEach(async (item) => await this.prisma.carrinho.update({
+      data: {
+          statusCarrinho: false,
+          statusCompra: false
+        },
+        where: {
+          id: item.id,
+        }
+      }));
+    }
+  }
   async update(data: CarrinhoDTO) {
     const carrinho = await this.findOne(data);
     if (carrinho) {

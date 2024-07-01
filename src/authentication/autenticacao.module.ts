@@ -15,7 +15,7 @@ import { CriptografiaService } from 'src/criptografia/criptografia.service';
     AutenticacaoService,
     PrismaService,
     { provide: APP_GUARD, useClass: AutenticacaoGuard },
-    CriptografiaService
+    CriptografiaService,
   ],
   imports: [
     UsuarioModule,

@@ -18,8 +18,12 @@ export class CategoriaController {
 
   @Post()
   @ApiBody({ type: CategoriaDTO })
-  @ApiResponse({ status: 200, description: 'Retorna a Categoria recém criada', type: CategoriaDTO})
-  async create(@Body() data: CategoriaDTO): Promise<CategoriaDTO>{
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna a Categoria recém criada',
+    type: CategoriaDTO,
+  })
+  async create(@Body() data: CategoriaDTO): Promise<CategoriaDTO> {
     return this.categoriaService.create(data);
   }
 

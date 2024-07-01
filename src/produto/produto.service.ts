@@ -20,7 +20,7 @@ export class ProdutoService {
         imgProduto1: data.imgProduto1,
         imgProduto2: data.imgProduto2,
         imgProduto3: data.imgProduto3,
-      }
+      },
     });
     return produto;
   }

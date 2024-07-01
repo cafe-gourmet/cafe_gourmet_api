@@ -20,7 +20,7 @@ export class UsuarioService {
       include: {
         cliente: {
           include: {
-          endereco: true,
+            endereco: true,
           },
         },
         cargo: true,
@@ -68,8 +68,8 @@ export class UsuarioService {
       throw new BadRequestException('Usuário não existe!');
     }
 
-    var usuarioAtualizado= await this.prisma.usuario.update({
-      data : {
+    const usuarioAtualizado = await this.prisma.usuario.update({
+      data: {
         nomeCompleto: data.nomeCompleto,
         email: data.email,
         senha: await this.criptografiaService.encriptografar(data.senha),
@@ -78,10 +78,10 @@ export class UsuarioService {
         fotoPerfil: data.fotoPerfil,
       },
       include: {
-        cliente:{include:{endereco:true}},
+        cliente: { include: { endereco: true } },
       },
       where: {
-        id:data.id,
+        id: data.id,
       },
     });
     this.clienteService.update(usuarioAtualizado.cliente.id, {
@@ -95,7 +95,7 @@ export class UsuarioService {
         bairro: data.endereco.bairro,
         rua: data.endereco.rua,
         numero: data.endereco.numero,
-      }
+      },
     });
     return usuarioAtualizado;
   }

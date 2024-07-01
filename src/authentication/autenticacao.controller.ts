@@ -22,7 +22,10 @@ export class AutenticacaoController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @ApiBody({ type: AutenticacaoDTO })
-  @ApiResponse({ status: 200, description: 'Devolve o token e o usuário autenticado'})
+  @ApiResponse({
+    status: 200,
+    description: 'Devolve o token e o usuário autenticado',
+  })
   signIn(@Body() autenticacaoDTO: AutenticacaoDTO) {
     return this.autenticacaoService.signIn(
       autenticacaoDTO.email,

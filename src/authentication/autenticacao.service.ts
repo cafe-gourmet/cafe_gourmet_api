@@ -17,10 +17,10 @@ export class AutenticacaoService {
     senha: string,
   ): Promise<{ access_token: string; user: Usuario }> {
     const user = await this.usuarioService.findOne(email);
-    if (!await this.criptografiaService.verificar(senha, user.senha)) {
+    if (!(await this.criptografiaService.verificar(senha, user.senha))) {
       throw new UnauthorizedException();
     }
-    const payload = {email: user.email, senha: user.senha};
+    const payload = { email: user.email, senha: user.senha };
     return {
       access_token: await this.jwtService.signAsync(payload),
       user,

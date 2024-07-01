@@ -18,8 +18,12 @@ export class CargoController {
 
   @Post()
   @ApiBody({ type: CargoDTO })
-  @ApiResponse({ status: 200, description: 'Retorna o cargo recém criado', type:CargoDTO})
-  async create(@Body() data: CargoDTO):Promise<CargoDTO> {
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna o cargo recém criado',
+    type: CargoDTO,
+  })
+  async create(@Body() data: CargoDTO): Promise<CargoDTO> {
     return this.cargoService.create(data);
   }
 

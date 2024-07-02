@@ -10,6 +10,7 @@ export class UsuarioDTO {
   idCargo: number;
   idSituacao: number;
   idCliente?: number | null;
+  cliente: UsuarioClienteDTO;
 }
 export class UsuarioClienteDTO {
   @ApiProperty()
@@ -28,4 +29,6 @@ export class UsuarioClienteDTO {
   endereco: EnderecoDTO;
   @ApiProperty()
   fotoPerfil?: string | null;
+  @ApiProperty()
+  planoId?: number;
 }

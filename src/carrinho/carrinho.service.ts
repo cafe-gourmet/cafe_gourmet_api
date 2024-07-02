@@ -1,11 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CarrinhoDTO } from '../carrinho/carrinho.dto';
-import { PrismaService } from 'src/prisma.service';
+import { Injectable } from '@nestjs/common';
 import { PlanoClienteService } from 'src/plano-cliente/plano-cliente.service';
+import { PrismaService } from 'src/prisma.service';
+import { CarrinhoDTO } from '../carrinho/carrinho.dto';
 
 @Injectable()
 export class CarrinhoService {
-  constructor(private prisma: PrismaService, private planoClienteService: PlanoClienteService) {}
+  constructor(
+    private prisma: PrismaService,
+    private planoClienteService: PlanoClienteService,
+  ) {}
 
   async obterUltimaCompra(idCliente: number): Promise<CarrinhoDTO[]> {
     return this.prisma.carrinho.findMany({
@@ -15,10 +18,10 @@ export class CarrinhoService {
       },
     });
   }
- async obterTodasCompras(idCliente: number): Promise<CarrinhoDTO[]> {
+  async obterTodasCompras(idCliente: number): Promise<CarrinhoDTO[]> {
     return this.prisma.carrinho.findMany({
       where: {
-        idCliente: idCliente
+        idCliente: idCliente,
       },
     });
   }
@@ -27,16 +30,19 @@ export class CarrinhoService {
   //statusCarrinho = 0 e statusCompra = 1 -> compra aprovada
   //statuaCarrinho = 0 e statusCompra = 0 -> compra cancelada
   async criarCarrinho(data: CarrinhoDTO[]) {
-    return data.forEach(async (cart) => await this.prisma.carrinho.create({
-      data: {
-        idCliente: cart.idCliente,
-        idPlano: cart.idPlano,
-        idProduto: cart.idProduto,
-        qntProduto: cart.idPlano,
-        statusCarrinho: true,
-        statusCompra: false
-      },
-    }));
+    return data.forEach(
+      async (cart) =>
+        await this.prisma.carrinho.create({
+          data: {
+            idCliente: cart.idCliente,
+            idPlano: cart.idPlano,
+            idProduto: cart.idProduto,
+            qntProduto: cart.idPlano,
+            statusCarrinho: true,
+            statusCompra: false,
+          },
+        }),
+    );
   }
 
   async confirmarCompra(idCliente: number) {
@@ -47,29 +53,35 @@ export class CarrinhoService {
         await this.prisma.carrinho.update({
           data: {
             statusCarrinho: false,
-            statusCompra: true
+            statusCompra: true,
           },
           where: {
             id: item.id,
-          }
+          },
         });
         if (item.idPlano)
-          await this.planoClienteService.vincular({idCliente: item.idCliente, idPlano: item.idPlano})
+          await this.planoClienteService.vincular({
+            idCliente: item.idCliente,
+            idPlano: item.idPlano,
+          });
       });
     }
   }
   async cancelarCompra(idCliente: number) {
     const itens = await this.obterUltimaCompra(idCliente);
     if (itens) {
-      return itens.forEach(async (item) => await this.prisma.carrinho.update({
-      data: {
-          statusCarrinho: false,
-          statusCompra: false
-        },
-        where: {
-          id: item.id,
-        }
-      }));
+      return itens.forEach(
+        async (item) =>
+          await this.prisma.carrinho.update({
+            data: {
+              statusCarrinho: false,
+              statusCompra: false,
+            },
+            where: {
+              id: item.id,
+            },
+          }),
+      );
     }
   }
   async update(data: CarrinhoDTO) {

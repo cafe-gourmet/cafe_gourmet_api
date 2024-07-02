@@ -7,6 +7,6 @@ import { PlanoClienteModule } from 'src/plano-cliente/plano-cliente.module';
 @Module({
   controllers: [CarrinhoController],
   providers: [CarrinhoService, PrismaService],
-  imports:[PlanoClienteModule]
+  imports: [PlanoClienteModule],
 })
 export class CarrinhoModule {}

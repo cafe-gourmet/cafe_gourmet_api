@@ -1,5 +1,5 @@
 export type CarrinhoDTO = {
-  id: number|null;
+  id: number | null;
   idProduto: number | null;
   idPlano: number | null;
   idCliente: number;

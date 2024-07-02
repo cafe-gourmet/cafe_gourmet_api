@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { Public } from '../authentication/public.decorator';
 import { UsuarioClienteDTO, UsuarioDTO } from './usuario.dto';
 import { UsuarioService } from './usuario.service';
-import { Public } from '../authentication/public.decorator';
-import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('usuario')
 export class UsuarioController {
@@ -16,8 +24,20 @@ export class UsuarioController {
     description: 'Devolve o usuário recém criado',
     type: UsuarioDTO,
   })
-  async create(@Body() data: UsuarioClienteDTO): Promise<UsuarioDTO> {
-    return this.usuarioService.create(data);
+  async create(@Body() data: UsuarioClienteDTO) {
+    return await this.usuarioService.create(data);
+  }
+
+  @ApiBearerAuth()
+  @Post('create-user')
+  async createUser(@Body() data: UsuarioDTO) {
+    return await this.usuarioService.createUser(data);
+  }
+
+  @ApiBearerAuth()
+  @Put('update-user')
+  async updateUser(@Body() data: UsuarioDTO) {
+    return await this.usuarioService.updateUser(data);
   }
 
   @ApiBearerAuth()
@@ -37,8 +57,9 @@ export class UsuarioController {
     return this.usuarioService.update(data);
   }
 
-  // @Delete(':id')
-  // async delete(@Param('id') id: string) {
-  //     return this.usuarioService.delete(Number(id));
-  // }
+  @Delete(':id')
+  @ApiBearerAuth()
+  async delete(@Param('id') id: string) {
+    return this.usuarioService.delete(Number(id));
+  }
 }

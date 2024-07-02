@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { CarrinhoService } from './carrinho.service';
-import { CarrinhoDTO } from './carrinho.dto';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Public } from 'src/authentication/public.decorator';
+import { CarrinhoDTO } from './carrinho.dto';
+import { CarrinhoService } from './carrinho.service';
 
 @Controller('carrinho')
 @Public()
@@ -14,7 +14,7 @@ export class CarrinhoController {
   }
   @Put('confirmarCompra/:id')
   async confirmarCompra(@Param('id') idCliente: string) {
-    console.log(idCliente)
+    console.log(idCliente);
     return this.carrinhoService.confirmarCompra(Number(idCliente));
   }
   @Put('cancelarCompra/:id')

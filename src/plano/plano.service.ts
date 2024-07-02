@@ -15,7 +15,7 @@ export class PlanoService {
   }
 
   async findAll() {
-    return this.prisma.plano.findMany();
+    return this.prisma.plano.findMany({include:{periodo:true, situacao:true}});
   }
   async create(data: PlanoDTO) {
     const plano = await this.prisma.plano.create({

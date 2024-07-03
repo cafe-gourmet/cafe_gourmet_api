@@ -16,6 +16,8 @@ datasource db {
 model SobreNos {
   id        Int    @id @default(autoincrement())
   descricao String
+  situacao   Situacao?    @relation(fields: [idSituacao], references: [id])
+  idSituacao Int?
 }
 
 model Contato {
@@ -26,6 +28,8 @@ model Contato {
   email          String
   descricao      String
   linkGoogleMaps String
+  situacao   Situacao?    @relation(fields: [idSituacao], references: [id])
+  idSituacao Int?
 }
 
 model Carrinho {
@@ -47,6 +51,8 @@ model Situacao {
   cargos    Cargo[]
   usuarios  Usuario[]
   planos    Plano[]
+  contatos  Contato[]
+  sobreNos  SobreNos[]
 }
 
 model Permissao {

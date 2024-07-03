@@ -28,7 +28,7 @@ export class SobreNosController {
 
   @Get('find')
   async findAll() {
-    return this.sobreNosService.findAll();
+    return this.sobreNosService.findActive();
   }
 
   @Put(':id')

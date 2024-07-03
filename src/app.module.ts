@@ -15,6 +15,7 @@ import { SobreNosModule } from './sobre-nos/sobre-nos.module';
 import { AutenticacaoModule } from './authentication/autenticacao.module';
 import { EnderecoModule } from './endereco/endereco.module';
 import { PlanoClienteModule } from './plano-cliente/plano-cliente.module';
+import { ContatoModule } from './contato/contato.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { PlanoClienteModule } from './plano-cliente/plano-cliente.module';
     AutenticacaoModule,
     EnderecoModule,
     PlanoClienteModule,
+    ContatoModule
   ],
   controllers: [AppController],
   providers: [AppService],

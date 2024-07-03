@@ -1,4 +1,4 @@
-import { ProdutoDTO } from "src/produto/produto.dto";
+import { ProdutoDTO } from 'src/produto/produto.dto';
 
 export type CarrinhoDTO = {
   id: number | null;
@@ -8,5 +8,5 @@ export type CarrinhoDTO = {
   qntProduto?: number | null;
   statusCompra: boolean | null;
   statusCarrinho: boolean | null;
-  produto?: ProdutoDTO | null
+  produto?: ProdutoDTO | null;
 };

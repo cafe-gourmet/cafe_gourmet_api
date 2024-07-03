@@ -30,9 +30,12 @@ model Contato {
 
 model Carrinho {
   id             Int      @id @default(autoincrement())
+  produto        Produto? @relation(fields: [idProduto], references: [id])
   idProduto      Int?
+  plano          Plano? @relation(fields: [idPlano], references: [id])
   idPlano        Int?
   qntProduto     Int?
+  cliente        Cliente @relation(fields: [idCliente], references: [id])
   idCliente      Int
   statusCarrinho Boolean?
   statusCompra   Boolean?
@@ -92,6 +95,7 @@ model Cliente {
   usuario   Usuario   @relation(fields: [idUsuario], references: [id])
   idUsuario Int       @unique
   endereco  Endereco?
+  carrinhos Carrinho[]
 }
 
 model Plano {
@@ -108,6 +112,7 @@ model Plano {
   idPeriodo  Int
   clientes   Cliente[]
   produtos   PlanoProdutos[]
+  carrinhos  Carrinho[]
 }
 
 model PlanoPeriodo {
@@ -131,6 +136,7 @@ model Produto {
   imgProduto2              String?
   imgProduto3              String?
   planos                   PlanoProdutos[]
+  carrinhos                Carrinho[]
 }
 
 model PlanoProdutos {

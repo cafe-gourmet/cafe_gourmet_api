@@ -16,13 +16,12 @@ export class CarrinhoService {
         idCliente: idCliente,
         statusCarrinho: true,
       },
+      include:{cliente:{include:{usuario:true}}, plano:true, produto:true }
     });
   }
-  async obterTodasCompras(idCliente: number): Promise<CarrinhoDTO[]> {
+  async obterTodasCompras(): Promise<CarrinhoDTO[]> {
     return this.prisma.carrinho.findMany({
-      where: {
-        idCliente: idCliente,
-      },
+      include: { cliente:{include:{usuario:true}}, plano:true, produto:true },
     });
   }
   //nasce com carrinho ativa e compra inativa

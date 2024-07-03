@@ -22,9 +22,9 @@ export class CarrinhoController {
     return this.carrinhoService.cancelarCompra(Number(idCliente));
   }
   //essa aqui usa no relatorio
-  @Get('obterTodasCompras/:id')
-  async obterTodasCompras(@Param('id') idCliente: string) {
-    return this.carrinhoService.obterTodasCompras(Number(idCliente));
+  @Get('obterTodasCompras')
+  async obterTodasCompras() {
+    return this.carrinhoService.obterTodasCompras();
   }
   //essa aqui usa no admin pra confirmar o pagamento
   @Get('obterUltimaCompra/:id')

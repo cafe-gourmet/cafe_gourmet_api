@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PlanoClienteService } from 'src/plano-cliente/plano-cliente.service';
 import { PrismaService } from 'src/prisma.service';
 import { CarrinhoDTO } from '../carrinho/carrinho.dto';
+import { ProdutoService } from 'src/produto/produto.service';
 
 @Injectable()
 export class CarrinhoService {
   constructor(
     private prisma: PrismaService,
     private planoClienteService: PlanoClienteService,
+    private produtoService: ProdutoService
   ) {}
 
   async obterUltimaCompra(idCliente: number): Promise<CarrinhoDTO[]> {
@@ -36,7 +38,7 @@ export class CarrinhoService {
             idCliente: cart.idCliente,
             idPlano: cart.idPlano,
             idProduto: cart.idProduto,
-            qntProduto: cart.idPlano,
+            qntProduto: cart.qntProduto,
             statusCarrinho: true,
             statusCompra: false,
           },
@@ -45,7 +47,6 @@ export class CarrinhoService {
   }
 
   async confirmarCompra(idCliente: number) {
-    console.log(idCliente);
     const itens = await this.obterUltimaCompra(idCliente);
     if (itens) {
       itens.forEach(async (item) => {
@@ -58,11 +59,15 @@ export class CarrinhoService {
             id: item.id,
           },
         });
-        if (item.idPlano)
+        if (item.idPlano) {
           await this.planoClienteService.vincular({
             idCliente: item.idCliente,
             idPlano: item.idPlano,
           });
+        } else if (item.idProduto) {
+          item.produto.quantidade = item.produto.quantidade - item.qntProduto;
+          await this.produtoService.update(item.idProduto, item.produto);
+        }
       });
     }
   }
@@ -81,17 +86,6 @@ export class CarrinhoService {
             },
           }),
       );
-    }
-  }
-  async update(data: CarrinhoDTO) {
-    const carrinho = await this.findOne(data);
-    if (carrinho) {
-      return this.prisma.carrinho.update({
-        data,
-        where: {
-          id: carrinho.id,
-        },
-      });
     }
   }
 

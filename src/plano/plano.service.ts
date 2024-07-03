@@ -27,7 +27,7 @@ export class PlanoService {
     const planoExiste = await this.findOne(id);
 
     if (!planoExiste) {
-      throw new BadRequestException('Usuário não existe!');
+      throw new BadRequestException('Plano não existe!');
     }
 
     return await this.prisma.plano.update({

@@ -7,6 +7,10 @@ export class SobreNosService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: SobreNosDTO) {
+    var textoOld = await this.findActive();
+    if (textoOld)
+      await this.delete(textoOld[0].id)
+
     data.idSituacao = 1;
     const texto = await this.prisma.sobreNos.create({
       data,
@@ -15,7 +19,7 @@ export class SobreNosService {
   }
 
   async findOne(idTexto: number) {
-    return this.prisma.sobreNos.findUnique({
+    return await this.prisma.sobreNos.findUnique({
       where: {
         id: idTexto,
       },
@@ -23,7 +27,7 @@ export class SobreNosService {
   }
 
   async findActive() {
-    return this.prisma.sobreNos.findMany({
+    return await this.prisma.sobreNos.findMany({
       where: {
         idSituacao: 1
       }

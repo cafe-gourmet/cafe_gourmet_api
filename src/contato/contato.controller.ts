@@ -23,23 +23,23 @@ export class ContatoController {
     description: 'Retorna os dados de Contato recém criado',
   })
   async create(@Body() data: ContatoDTO) {
-    return this.contatoService.create(data);
+    return await this.contatoService.create(data);
   }
 
   @Get('find')
   async findAll() {
-    return this.contatoService.findActive();
+    return await this.contatoService.findActive();
   }
 
   @Put()
   @ApiBearerAuth()
   async update(@Body() data: ContatoDTO) {
-    return this.contatoService.update(data);
+    return await this.contatoService.update(data);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
   async delete(@Param('id') id: string) {
-    return this.contatoService.delete(Number(id));
+    return await this.contatoService.delete(Number(id));
   }
 }

@@ -64,47 +64,41 @@ export class CarrinhoService {
     );
   }
 
-  async confirmarCompra(idCliente: number) {
-    const itens = await this.obterUltimaCompra(idCliente);
-    if (itens) {
-      itens.forEach(async (item) => {
-        await this.prisma.carrinho.update({
-          data: {
-            statusCarrinho: false,
-            statusCompra: true,
-          },
-          where: {
-            id: item.id,
-          },
-        });
-        if (item.idPlano) {
-          await this.planoClienteService.vincular({
-            idCliente: item.idCliente,
-            idPlano: item.idPlano,
-          });
-        } else if (item.idProduto) {
-          item.produto.quantidade = item.produto.quantidade - item.qntProduto;
-          await this.produtoService.update(item.idProduto, item.produto);
-        }
+  async confirmarCompra(idCarrinho: number) {
+    const carrinho: CarrinhoDTO = await this.prisma.carrinho.update({
+      data: {
+        statusCarrinho: false,
+        statusCompra: true,
+      },
+      where: {
+        id: idCarrinho,
+      },
+      include: {
+        produto: true,
+      },
+    });
+
+    if (carrinho.idPlano) {
+      await this.planoClienteService.vincular({
+        idCliente: carrinho.idCliente,
+        idPlano: carrinho.idPlano,
       });
+    } else if (carrinho.idProduto) {
+      carrinho.produto.quantidade =
+        carrinho.produto.quantidade - carrinho.qntProduto;
+      await this.produtoService.update(carrinho.idProduto, carrinho.produto);
     }
   }
-  async cancelarCompra(idCliente: number) {
-    const itens = await this.obterUltimaCompra(idCliente);
-    if (itens) {
-      return itens.forEach(
-        async (item) =>
-          await this.prisma.carrinho.update({
-            data: {
-              statusCarrinho: false,
-              statusCompra: false,
-            },
-            where: {
-              id: item.id,
-            },
-          }),
-      );
-    }
+  async cancelarCompra(idCarrinho: number) {
+    return await this.prisma.carrinho.update({
+      data: {
+        statusCarrinho: false,
+        statusCompra: false,
+      },
+      where: {
+        id: idCarrinho,
+      },
+    });
   }
 
   async findOne(data: CarrinhoDTO) {

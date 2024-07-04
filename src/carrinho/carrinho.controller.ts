@@ -13,13 +13,12 @@ export class CarrinhoController {
     return await this.carrinhoService.criarCarrinho(data);
   }
   @Put('confirmarCompra/:id')
-  async confirmarCompra(@Param('id') idCliente: string) {
-    console.log(idCliente);
-    return this.carrinhoService.confirmarCompra(Number(idCliente));
+  async confirmarCompra(@Param('id') idCarrinho: string) {
+    return this.carrinhoService.confirmarCompra(Number(idCarrinho));
   }
   @Put('cancelarCompra/:id')
-  async cancelarCompra(@Param('id') idCliente: string) {
-    return this.carrinhoService.cancelarCompra(Number(idCliente));
+  async cancelarCompra(@Param('id') idCarrinho: string) {
+    return this.carrinhoService.cancelarCompra(Number(idCarrinho));
   }
 
   @Get('obterTodasComprasCliente/:id')

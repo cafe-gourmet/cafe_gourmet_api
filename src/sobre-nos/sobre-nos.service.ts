@@ -7,9 +7,8 @@ export class SobreNosService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: SobreNosDTO) {
-    var textoOld = await this.findActive();
-    if (textoOld)
-      await this.delete(textoOld[0].id)
+    const textoOld = await this.findActive();
+    if (textoOld) await this.delete(textoOld[0].id);
 
     data.idSituacao = 1;
     const texto = await this.prisma.sobreNos.create({
@@ -29,8 +28,8 @@ export class SobreNosService {
   async findActive() {
     return await this.prisma.sobreNos.findMany({
       where: {
-        idSituacao: 1
-      }
+        idSituacao: 1,
+      },
     });
   }
 
@@ -38,7 +37,6 @@ export class SobreNosService {
     if (!(await this.findOne(id))) {
       throw new BadRequestException('Informação não encontrada!');
     }
-
     return await this.prisma.sobreNos.update({
       data,
       where: {
@@ -53,7 +51,7 @@ export class SobreNosService {
     if (!texto) {
       throw new BadRequestException('Informação não encontrada!');
     }
-    
+
     texto.idSituacao = 2;
     return await this.update(id, texto);
   }

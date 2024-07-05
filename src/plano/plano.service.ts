@@ -15,7 +15,9 @@ export class PlanoService {
   }
 
   async findAll() {
-    return this.prisma.plano.findMany({include:{periodo:true, situacao:true}});
+    return this.prisma.plano.findMany({
+      include: { periodo: true, situacao: true },
+    });
   }
   async create(data: PlanoDTO) {
     const plano = await this.prisma.plano.create({
@@ -31,9 +33,18 @@ export class PlanoService {
     }
 
     return await this.prisma.plano.update({
-      data,
+      data: {
+        nome: data.nome,
+        preco: data.preco,
+        descricao: data.descricao,
+        idSituacao: data.idSituacao,
+        idPeriodo: data.idPeriodo,
+        imgPlano1: data.imgPlano1,
+        imgPlano2: data.imgPlano2,
+        imgPlano3: data.imgPlano3,
+      },
       where: {
-        id,
+        id: id,
       },
     });
   }

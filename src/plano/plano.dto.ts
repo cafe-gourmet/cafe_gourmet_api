@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class PlanoDTO {
   @ApiProperty()
+  id: number;
+  @ApiProperty()
   nome: string;
   @ApiProperty()
   preco: number;

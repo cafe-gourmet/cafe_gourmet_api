@@ -23,7 +23,7 @@ export class UsuarioService {
             endereco: true,
           },
         },
-        cargo: true,
+        cargo: {include:{permissoes:{include:{permissao:true}}}},
       },
     });
   }
